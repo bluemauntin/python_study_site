@@ -187,11 +187,19 @@ document.addEventListener('keydown', (e) => {
     }
 });
 
-// 모달 배경 클릭으로 닫기
+// 모달 배경 클릭으로 닫기 (드래그 시 닫히지 않도록 개선)
+let modalMouseDownTarget = null;
+
+chapterModal.addEventListener('mousedown', (e) => {
+    modalMouseDownTarget = e.target;
+});
+
 chapterModal.addEventListener('click', (e) => {
-    if (e.target === chapterModal) {
+    // mousedown과 click 모두 모달 배경에서 발생한 경우에만 닫기
+    if (e.target === chapterModal && modalMouseDownTarget === chapterModal) {
         closeModal();
     }
+    modalMouseDownTarget = null;
 });
 
 // 미리보기 함수
